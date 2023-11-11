@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Stoperica</string>
+    <string name="seconds_past_placeholder">%s s</string>
+</resources>

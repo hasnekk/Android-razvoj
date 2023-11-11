@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import hr.fer.ruazosa.lecture4.notesapplication.databinding.NoteCellBinding
 
@@ -26,7 +27,7 @@ class NotesAdapter(notesViewModel: NotesViewModel, navController: NavController)
     var _binding: NoteCellBinding? = null
     private val binding get() = _binding!!
 
-    class NotesViewHolder(noteView: View): RecyclerView.ViewHolder(noteView) {
+    class NotesViewHolder(noteView: View) : RecyclerView.ViewHolder(noteView) {
         var noteDateTextView: TextView = noteView.findViewById(R.id.noteDateTextViewId)
         var noteTitleTextView: TextView = noteView.findViewById(R.id.noteTitleTextViewId)
         var noteDeletebtn: Button = noteView.findViewById(R.id.deleteNoteBtn)
@@ -47,13 +48,13 @@ class NotesAdapter(notesViewModel: NotesViewModel, navController: NavController)
         holder.noteDateTextView.text = note!!.noteDate.toString()
         holder.noteTitleTextView.text = note!!.noteTitle.toString()
 
-        holder.noteDeletebtn.setOnClickListener{
+        holder.noteDeletebtn.setOnClickListener {
             notesViewModel.deleteNote(note!!)
             notifyItemRemoved(position) // Notify the adapter that an item has been removed
         }
 
         // A property to access the item inside the list (RecycleView)
-        holder.itemView.setOnClickListener{
+        holder.itemView.setOnClickListener {
             val bundle = Bundle()
             bundle.putString("noteTitle", note.noteTitle.toString())
             bundle.putString("noteDescription", note.noteDescription.toString())
@@ -62,7 +63,9 @@ class NotesAdapter(notesViewModel: NotesViewModel, navController: NavController)
             notifyItemChanged(position)
         }
     }
+
     override fun getItemCount(): Int {
         return notesViewModel.getNoteCount()
     }
+
 }
